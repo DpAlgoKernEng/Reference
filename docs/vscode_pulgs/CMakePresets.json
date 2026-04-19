@@ -1,0 +1,251 @@
+{
+    "version": 10,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 19,
+        "patch": 0
+    },
+    "configurePresets": [
+        {
+            "name": "gcc-compilers",
+            "displayName": "GCC Compilers",
+            "description": "Using GCC compilers for Unix Makefiles",
+            "generator": "Unix Makefiles",
+            "binaryDir": "${sourceDir}/build",
+            "cacheVariables": {
+                "CMAKE_INSTALL_PREFIX": "${sourceDir}/install",
+                "CMAKE_C_COMPILER": "/usr/bin/gcc",
+                "CMAKE_CXX_COMPILER": "/usr/bin/g++",
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "YES",
+                "CMAKE_EXPORT_PACKAGE_REGISTRY": "ON",
+                "CMAKE_EXPORT_TARGETS": "ON"
+            }
+        },
+        {
+            "name": "clang-compilers",
+            "displayName": "Clang Compilers",
+            "description": "Using Clang compilers with Ninja generator",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build",
+            "cacheVariables": {
+                "CMAKE_INSTALL_PREFIX": "${sourceDir}/install",
+                "CMAKE_C_COMPILER": "/usr/bin/clang-19",
+                "CMAKE_CXX_COMPILER": "/usr/bin/clang++-19",
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "YES",
+                "CMAKE_EXPORT_PACKAGE_REGISTRY": "ON",
+                "CMAKE_EXPORT_TARGETS": "ON"
+            }
+        },
+        {
+            "name": "clang20-compilers",
+            "displayName": "Clang20 Compilers",
+            "description": "Using Clang20 compilers with Ninja generator",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build",
+            "cacheVariables": {
+                "CMAKE_INSTALL_PREFIX": "${sourceDir}/install",
+                "CMAKE_C_COMPILER": "/opt/homebrew/Cellar/llvm/20.1.7/bin/clang",
+                "CMAKE_CXX_COMPILER": "/opt/homebrew/Cellar/llvm/20.1.7/bin/clang++",
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "YES",
+                "CMAKE_EXPORT_PACKAGE_REGISTRY": "ON",
+                "CMAKE_EXPORT_TARGETS": "ON"
+            }
+        },
+        {
+            "name": "msvc-compilers",
+            "displayName": "MSVC Compilers",
+            "description": "Using MSVC compilers on Windows",
+            "generator": "Visual Studio 17 2022",
+            "binaryDir": "${sourceDir}/build",
+            "cacheVariables": {
+                "CMAKE_INSTALL_PREFIX": "${sourceDir}/install",
+                "CMAKE_C_COMPILER": "cl.exe",
+                "CMAKE_CXX_COMPILER": "cl.exe",
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "YES",
+                "CMAKE_EXPORT_PACKAGE_REGISTRY": "ON",
+                "CMAKE_EXPORT_TARGETS": "ON"
+            }
+        },
+        {
+            "name": "Custom configure preset",
+            "displayName": "Custom configure preset",
+            "description": "Sets Ninja generator, build and install directory",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/out/build/${presetName}",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}"
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "make-gcc-debug",
+            "displayName": "Make with GCC (Debug)",
+            "configurePreset": "gcc-compilers",
+            "configuration": "Debug",
+            "cleanFirst": true,
+            "jobs": 8
+        },
+        {
+            "name": "make-gcc-release",
+            "displayName": "Make with GCC (Release)",
+            "configurePreset": "gcc-compilers",
+            "configuration": "Release",
+            "cleanFirst": true,
+            "jobs": 8
+        },
+        {
+            "name": "ninja-clang-debug",
+            "displayName": "Ninja with Clang (Debug)",
+            "configurePreset": "clang-compilers",
+            "configuration": "Debug",
+            "cleanFirst": true,
+            "jobs": 8
+        },
+        {
+            "name": "ninja-clang-release",
+            "displayName": "Ninja with Clang (Release)",
+            "configurePreset": "clang-compilers",
+            "configuration": "Release",
+            "cleanFirst": true,
+            "jobs": 8
+        },
+        {
+            "name": "ninja-clang20-debug",
+            "displayName": "Ninja with Clang20 (Debug)",
+            "configurePreset": "clang20-compilers",
+            "configuration": "Debug",
+            "cleanFirst": true,
+            "jobs": 8
+        },
+        {
+            "name": "ninja-clang20-release",
+            "displayName": "Ninja with Clang20 (Release)",
+            "configurePreset": "clang20-compilers",
+            "configuration": "Release",
+            "cleanFirst": true,
+            "jobs": 8
+        }
+    ],
+    "testPresets": [
+        {
+            "name": "gcc-tests",
+            "displayName": "Run Tests with GCC",
+            "configurePreset": "gcc-compilers",
+            "configuration": "Debug",
+            "output": {
+                "outputOnFailure": true,
+                "shortProgress": true
+            }
+        },
+        {
+            "name": "clang-tests",
+            "displayName": "Run Tests with Clang",
+            "configurePreset": "clang-compilers",
+            "configuration": "Debug",
+            "output": {
+                "outputOnFailure": true,
+                "shortProgress": true
+            }
+        },
+        {
+            "name": "clang20-tests",
+            "displayName": "Run Tests with Clang20",
+            "configurePreset": "clang20-compilers",
+            "configuration": "Debug",
+            "output": {
+                "outputOnFailure": true,
+                "shortProgress": true
+            }
+        }
+    ],
+    "packagePresets": [
+        {
+            "name": "package-gcc",
+            "displayName": "Package with GCC",
+            "configurePreset": "gcc-compilers"
+        },
+        {
+            "name": "package-clang",
+            "displayName": "Package with Clang",
+            "configurePreset": "clang-compilers"
+        },
+        {
+            "name": "package-clang20",
+            "displayName": "Package with Clang20",
+            "configurePreset": "clang20-compilers"
+        }
+    ],
+    "workflowPresets": [
+        {
+            "name": "gcc-workflow",
+            "displayName": "Full Workflow (GCC)",
+            "description": "Complete workflow: configure, build, test, and package with GCC",
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "gcc-compilers"
+                },
+                {
+                    "type": "build",
+                    "name": "make-gcc-debug"
+                },
+                {
+                    "type": "test",
+                    "name": "gcc-tests"
+                },
+                {
+                    "type": "package",
+                    "name": "package-gcc"
+                }
+            ]
+        },
+        {
+            "name": "clang-workflow",
+            "displayName": "Full Workflow (Clang)",
+            "description": "Complete workflow: configure, build, test, and package with Clang",
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "clang-compilers"
+                },
+                {
+                    "type": "build",
+                    "name": "ninja-clang-debug"
+                },
+                {
+                    "type": "test",
+                    "name": "clang-tests"
+                },
+                {
+                    "type": "package",
+                    "name": "package-clang"
+                }
+            ]
+        },
+        {
+            "name": "clang20-workflow",
+            "displayName": "Full Workflow (Clang20)",
+            "description": "Complete workflow: configure, build, test, and package with Clang20",
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "clang20-compilers"
+                },
+                {
+                    "type": "build",
+                    "name": "ninja-clang20-debug"
+                },
+                {
+                    "type": "test",
+                    "name": "clang20-tests"
+                },
+                {
+                    "type": "package",
+                    "name": "package-clang20"
+                }
+            ]
+        }
+    ]
+}
