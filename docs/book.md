@@ -76,6 +76,12 @@
 - 《Go Web 编程》
 - 《The way to Go》
 
+### Rust语言书单
+- 《Rust权威指南》
+- 《Rust程序设计（第2版）》
+- 《Rust实战》
+- 《Rust编程之道》
+
 ### Python书单-初级
 - 《A Byte of Python》
 - 《Python编程快速上手》
