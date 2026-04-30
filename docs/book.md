@@ -74,7 +74,7 @@
 ### Go语言书单
 - 《Go程序设计语言》
 - 《Go Web 编程》
-- 《The way to Go》
+- 《Go入门指南》
 - 《Go语言实战》
 
 ### Rust语言书单
